@@ -1,0 +1,63 @@
+<!-- Services Hero -->
+<div class="services-hero">
+  <div class="services-hero-bg"></div>
+  <div class="services-hero-content">
+    <div class="hero-badge-small" appReveal>
+      <i class="fas fa-snowflake"></i>
+      <span>{{ t.isArabic() ? 'خدماتنا' : 'Our Services' }}</span>
+    </div>
+    <h1 appReveal style="animation-delay:0.1s">{{ t.t('services_title') }}</h1>
+    <p appReveal style="animation-delay:0.2s">{{ t.t('services_subtitle') }}</p>
+  </div>
+</div>
+
+<!-- Services Grid -->
+<section class="services-page section-padding">
+  <div class="container">
+    <div class="services-page-grid">
+      @for (svc of services; track svc.titleKey; let i = $index) {
+        <div class="svc-card" appReveal [style.transition-delay]="(i * 100) + 'ms'">
+          <div class="svc-header">
+            <div class="svc-icon" [style.background]="svc.gradient">
+              <i [class]="svc.icon"></i>
+            </div>
+            <h3 class="svc-title">{{ t.t(svc.titleKey) }}</h3>
+          </div>
+          <p class="svc-desc">{{ t.t(svc.descKey) }}</p>
+          <ul class="svc-features">
+            @for (feat of (t.isArabic() ? svc.featuresAr : svc.features); track feat) {
+              <li>
+                <i class="fas fa-check-circle"></i>
+                <span>{{ feat }}</span>
+              </li>
+            }
+          </ul>
+          <a routerLink="/contact" class="svc-cta">
+            {{ t.t('services_cta') }} <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      }
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="svc-banner" appReveal>
+      <div class="banner-content">
+        <div class="banner-icon">
+          <i class="fas fa-phone-volume"></i>
+        </div>
+        <div>
+          <h3>{{ t.isArabic() ? 'هل تحتاج مساعدة؟' : 'Need Help Choosing?' }}</h3>
+          <p>{{ t.isArabic() ? 'تواصل معنا واحصل على استشارة مجانية' : 'Contact us for a free consultation' }}</p>
+        </div>
+      </div>
+      <div class="banner-actions">
+        <a href="tel:+201030957153" class="btn-primary">
+          <i class="fas fa-phone"></i> 01030957153
+        </a>
+        <a href="https://wa.me/201030957153" target="_blank" rel="noopener" class="btn-whatsapp-banner">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

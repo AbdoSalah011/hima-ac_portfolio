@@ -1,0 +1,109 @@
+<section class="hero">
+  <!-- Animated Background -->
+  <div class="hero-bg">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+    <div class="hero-grid"></div>
+  </div>
+
+  <div class="hero-container">
+    <div class="hero-content">
+      <!-- Badge -->
+      <div class="hero-badge animate-fade-up">
+        <span class="badge-dot"></span>
+        <i class="fas fa-snowflake badge-icon"></i>
+        {{ t.t('hero_badge') }}
+      </div>
+
+      <!-- Title -->
+      <h1 class="hero-title animate-fade-up" style="animation-delay: 0.1s">
+        {{ t.t('hero_title') }}
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="hero-subtitle animate-fade-up" style="animation-delay: 0.2s">
+        {{ t.t('hero_subtitle') }}
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero-ctas animate-fade-up" style="animation-delay: 0.3s">
+        <a routerLink="/contact" class="btn-primary">
+          <i class="fas fa-phone-alt"></i>
+          {{ t.t('hero_cta_primary') }}
+        </a>
+        <a routerLink="/portfolio" class="btn-outline btn-outline-hero">
+          <i class="fas fa-images"></i>
+          {{ t.t('hero_cta_secondary') }}
+        </a>
+      </div>
+
+      <!-- Phones quick access -->
+      <div class="hero-phones animate-fade-up" style="animation-delay: 0.4s">
+        <a href="tel:+201030957153" class="hero-phone-link">
+          <i class="fas fa-phone"></i>
+          <span>01030957153</span>
+        </a>
+        <span class="phone-divider">•</span>
+        <a href="tel:+201104711824" class="hero-phone-link">
+          <i class="fas fa-phone"></i>
+          <span>01104711824</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero Visual -->
+    <div class="hero-visual animate-fade-up" style="animation-delay: 0.2s">
+      <div class="hero-card-glow">
+        <div class="hero-ac-icon">
+          <div class="ac-unit">
+            <div class="ac-body">
+              <div class="ac-vents">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="ac-display">
+                <div class="ac-temp">22°</div>
+                <div class="ac-mode">❄ COOL</div>
+              </div>
+            </div>
+            <div class="ac-airflow">
+              <div class="airflow-line" style="animation-delay: 0s"></div>
+              <div class="airflow-line" style="animation-delay: 0.2s"></div>
+              <div class="airflow-line" style="animation-delay: 0.4s"></div>
+              <div class="airflow-line" style="animation-delay: 0.6s"></div>
+              <div class="airflow-line" style="animation-delay: 0.8s"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating badges -->
+        <div class="floating-badge fb-1">
+          <i class="fas fa-certificate"></i>
+          <span>{{ t.isArabic() ? 'معتمد' : 'Certified' }}</span>
+        </div>
+        <div class="floating-badge fb-2">
+          <i class="fas fa-star"></i>
+          <span>{{ t.isArabic() ? '10+ سنوات' : '10+ Years' }}</span>
+        </div>
+        <div class="floating-badge fb-3">
+          <i class="fas fa-check-circle"></i>
+          <span>{{ t.isArabic() ? 'ضمان 2 سنة' : '2yr Warranty' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="hero-stats">
+    @for (stat of stats; track stat.labelKey; let i = $index) {
+      <div class="stat-item" appReveal [style.transition-delay]="(i * 100) + 'ms'">
+        <div class="stat-icon">
+          <i [class]="stat.icon"></i>
+        </div>
+        <div class="stat-content">
+          <span class="stat-value">{{ animatedValues()[i] }}+</span>
+          <span class="stat-label">{{ t.t(stat.labelKey) }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>
