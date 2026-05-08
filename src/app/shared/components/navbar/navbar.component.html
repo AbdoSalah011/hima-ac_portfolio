@@ -1,0 +1,105 @@
+<nav class="navbar" [class.scrolled]="isScrolled()" [class.dark]="isDark">
+  <div class="nav-container">
+    <!-- Logo -->
+    <a routerLink="/" class="nav-logo" (click)="closeMobileMenu()">
+      <span class="logo-icon">❄</span>
+      <div class="logo-text">
+        <span class="logo-brand">HIMA AC</span>
+        <span class="logo-tagline">{{ isArabic ? 'م. إبراهيم عبد الحي' : 'Eng. Ibrahim Abdelhay' }}</span>
+      </div>
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link">
+          {{ t.t('nav_home') }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/services" routerLinkActive="active" class="nav-link">
+          {{ t.t('nav_services') }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/portfolio" routerLinkActive="active" class="nav-link">
+          {{ t.t('nav_portfolio') }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/contact" routerLinkActive="active" class="nav-link">
+          {{ t.t('nav_contact') }}
+        </a>
+      </li>
+    </ul>
+
+    <!-- Controls -->
+    <div class="nav-controls">
+      <!-- Language Toggle -->
+      <button class="lang-btn" (click)="toggleLanguage()" [title]="isArabic ? 'English' : 'عربي'">
+        <span class="lang-flag">{{ isArabic ? '🇺🇸' : '🇪🇬' }}</span>
+        <span class="lang-label">{{ isArabic ? 'EN' : 'AR' }}</span>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button class="theme-btn" (click)="toggleTheme()" [title]="isDark ? 'Light Mode' : 'Dark Mode'">
+        @if (isDark) {
+          <i class="fas fa-sun"></i>
+        } @else {
+          <i class="fas fa-moon"></i>
+        }
+      </button>
+
+      <!-- Mobile Menu Btn -->
+      <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="Toggle Menu">
+        <span [class.open]="isMobileMenuOpen()"></span>
+        <span [class.open]="isMobileMenuOpen()"></span>
+        <span [class.open]="isMobileMenuOpen()"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  @if (isMobileMenuOpen()) {
+    <div class="mobile-menu" [class.dark]="isDark">
+      <ul class="mobile-nav-links">
+        <li>
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+             (click)="closeMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-home"></i> {{ t.t('nav_home') }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/services" routerLinkActive="active"
+             (click)="closeMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-snowflake"></i> {{ t.t('nav_services') }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/portfolio" routerLinkActive="active"
+             (click)="closeMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-briefcase"></i> {{ t.t('nav_portfolio') }}
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contact" routerLinkActive="active"
+             (click)="closeMobileMenu()" class="mobile-nav-link">
+            <i class="fas fa-envelope"></i> {{ t.t('nav_contact') }}
+          </a>
+        </li>
+      </ul>
+      <div class="mobile-controls">
+        <button class="lang-btn-mobile" (click)="toggleLanguage()">
+          {{ isArabic ? '🇺🇸 English' : '🇪🇬 عربي' }}
+        </button>
+        <button class="theme-btn-mobile" (click)="toggleTheme()">
+          @if (isDark) {
+            <i class="fas fa-sun"></i> Light Mode
+          } @else {
+            <i class="fas fa-moon"></i> Dark Mode
+          }
+        </button>
+      </div>
+    </div>
+  }
+</nav>

@@ -1,0 +1,80 @@
+<section class="about-section section-padding" id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <!-- Profile Card -->
+      <div class="profile-card reveal-left" appReveal>
+        <div class="profile-image-wrap">
+          <div class="profile-image-placeholder">
+            <i class="fas fa-user-tie profile-icon"></i>
+          </div>
+          <div class="profile-exp-badge">
+            <span class="exp-years">{{ t.t('about_exp_years') }}</span>
+            <span class="exp-label">{{ t.t('about_exp_label') }}</span>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="certifications">
+          @for (cert of certifications; track cert.label) {
+            <div class="cert-item">
+              <i [class]="cert.icon"></i>
+              <span>{{ cert.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="about-content reveal-right" appReveal>
+        <div class="section-badge">
+          <i class="fas fa-user-tie"></i>
+          {{ t.isArabic() ? 'نبذة عني' : 'About Me' }}
+        </div>
+
+        <h2 class="section-title" style="text-align:start">{{ t.t('about_title') }}</h2>
+        <p class="section-subtitle" style="text-align:start; margin-left:0; margin-right:0">{{ t.t('about_subtitle') }}</p>
+
+        <h3 class="profile-name">{{ t.t('about_name') }}</h3>
+        <p class="profile-role">
+          <i class="fas fa-snowflake"></i>
+          {{ t.t('about_role') }}
+        </p>
+
+        <p class="profile-bio">{{ t.t('about_bio') }}</p>
+
+        <!-- Skills -->
+        <div class="skills-grid">
+          @for (skill of skills; track skill.key; let i = $index) {
+            <div class="skill-item" appReveal [style.transition-delay]="(i * 80) + 'ms'">
+              <div class="skill-icon">
+                <i [class]="skill.icon"></i>
+              </div>
+              <div class="skill-info">
+                <div class="skill-header">
+                  <span class="skill-name">{{ t.t(skill.key) }}</span>
+                  <span class="skill-pct">{{ skill.level }}%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" [style.width]="skill.level + '%'"></div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Contact Actions -->
+        <div class="about-actions">
+          <a href="tel:+201030957153" class="btn-primary">
+            <i class="fas fa-phone-alt"></i>
+            {{ t.isArabic() ? 'اتصل بنا' : 'Call Now' }}
+          </a>
+          <a href="https://wa.me/201030957153" target="_blank" rel="noopener" class="btn-whatsapp">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

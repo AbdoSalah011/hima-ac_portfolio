@@ -1,0 +1,161 @@
+<!-- Portfolio Hero -->
+<div class="portfolio-hero">
+  <div class="portfolio-hero-bg"></div>
+  <div class="portfolio-hero-content">
+    <div class="hero-badge-small" appReveal>
+      <i class="fas fa-briefcase"></i>
+      <span>{{ t.isArabic() ? 'أعمالنا' : 'Our Work' }}</span>
+    </div>
+    <h1 appReveal>{{ t.t('portfolio_title') }}</h1>
+    <p appReveal>{{ t.t('portfolio_subtitle') }}</p>
+  </div>
+</div>
+
+<!-- Portfolio Section -->
+<section class="portfolio-section section-padding">
+  <div class="container">
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" appReveal>
+      @for (f of filters; track f.key) {
+        <button
+          class="filter-btn"
+          [class.active]="activeFilter() === f.key"
+          (click)="setFilter(f.key)"
+        >
+          {{ t.t(f.labelKey) }}
+        </button>
+      }
+    </div>
+
+    <!-- Portfolio Grid -->
+    <div class="portfolio-grid">
+      @for (item of filteredItems(); track item.id; let i = $index) {
+        <div class="portfolio-item" appReveal [style.transition-delay]="(i * 80) + 'ms'"
+             (click)="openItem(item)">
+          <div class="portfolio-img-wrap">
+            <img [src]="item.imageUrl" [alt]="getTitle(item)" loading="lazy" />
+            <div class="portfolio-overlay">
+              <div class="portfolio-overlay-content">
+                <i class="fas fa-expand-alt overlay-icon"></i>
+                <span>{{ t.t('portfolio_view') }}</span>
+              </div>
+            </div>
+            <div class="portfolio-category-badge" [style.background]="getCategoryColor(item.category)">
+              {{ getCategoryLabel(item.category) }}
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <h3 class="portfolio-item-title">{{ getTitle(item) }}</h3>
+            <p class="portfolio-item-desc">{{ getDesc(item) }}</p>
+            @if (item.location) {
+              <div class="portfolio-meta">
+                <span class="meta-tag"><i class="fas fa-map-marker-alt"></i> {{ item.location }}</span>
+                @if (item.year) {
+                  <span class="meta-tag"><i class="fas fa-calendar"></i> {{ item.year }}</span>
+                }
+              </div>
+            }
+            @if (item.tags && item.tags.length) {
+              <div class="portfolio-tags">
+                @for (tag of item.tags; track tag) {
+                  <span class="tag">{{ tag }}</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    @if (filteredItems().length === 0) {
+      <div class="empty-state">
+        <i class="fas fa-search"></i>
+        <p>{{ t.isArabic() ? 'لا توجد نتائج' : 'No items found' }}</p>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section section-padding">
+  <div class="container">
+    <div appReveal>
+      <h2 class="section-title">{{ t.t('gallery_title') }}</h2>
+      <div class="section-divider"></div>
+      <p class="section-subtitle">{{ t.t('gallery_subtitle') }}</p>
+    </div>
+
+    <div class="gallery-grid">
+      @for (img of portfolioSvc.galleryImages; track img.id; let i = $index) {
+        <div class="gallery-item" appReveal [style.transition-delay]="(i * 60) + 'ms'"
+             (click)="openLightbox(img.url)">
+          <img [src]="img.url" [alt]="t.isArabic() ? img.captionAr : img.captionEn" loading="lazy" />
+          <div class="gallery-overlay">
+            <i class="fas fa-search-plus"></i>
+            <span>{{ t.isArabic() ? img.captionAr : img.captionEn }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Detail Modal -->
+@if (selectedItem()) {
+  <div class="modal-overlay" (click)="closeItem()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeItem()">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-img-wrap">
+        <img [src]="selectedItem()!.imageUrl" [alt]="getTitle(selectedItem()!)" />
+        <div class="modal-cat-badge" [style.background]="getCategoryColor(selectedItem()!.category)">
+          {{ getCategoryLabel(selectedItem()!.category) }}
+        </div>
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-title">{{ getTitle(selectedItem()!) }}</h2>
+        <p class="modal-desc">{{ getDesc(selectedItem()!) }}</p>
+        @if (selectedItem()!.location) {
+          <div class="modal-meta">
+            <div class="modal-meta-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ selectedItem()!.location }}</span>
+            </div>
+            @if (selectedItem()!.year) {
+              <div class="modal-meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>{{ selectedItem()!.year }}</span>
+              </div>
+            }
+          </div>
+        }
+        @if (selectedItem()!.tags && selectedItem()!.tags!.length) {
+          <div class="modal-tags">
+            @for (tag of selectedItem()!.tags!; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          </div>
+        }
+        <div class="modal-actions">
+          <a href="https://wa.me/201030957153" target="_blank" rel="noopener" class="btn-primary">
+            <i class="fab fa-whatsapp"></i>
+            {{ t.isArabic() ? 'استفسر عن هذا المشروع' : 'Enquire About This Project' }}
+          </a>
+          <button class="btn-outline" (click)="closeItem()">{{ t.t('portfolio_close') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Lightbox -->
+@if (lightboxImage()) {
+  <div class="lightbox-overlay" (click)="closeLightbox()">
+    <button class="lightbox-close" (click)="closeLightbox()">
+      <i class="fas fa-times"></i>
+    </button>
+    <img [src]="lightboxImage()!" alt="Gallery Image" (click)="$event.stopPropagation()" />
+  </div>
+}

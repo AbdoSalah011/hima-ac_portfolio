@@ -1,0 +1,35 @@
+<section class="services-section section-padding">
+  <div class="container">
+    <div appReveal>
+      <h2 class="section-title">{{ t.t('services_title') }}</h2>
+      <div class="section-divider"></div>
+      <p class="section-subtitle">{{ t.t('services_subtitle') }}</p>
+    </div>
+
+    <div class="services-grid">
+      @for (service of services; track service.titleKey; let i = $index) {
+        <div class="service-card" appReveal [style.transition-delay]="(i * 80) + 'ms'">
+          <div class="service-icon-wrap" [style.background]="service.gradient">
+            <i [class]="service.icon"></i>
+          </div>
+          <h3 class="service-title">{{ t.t(service.titleKey) }}</h3>
+          <p class="service-desc">{{ t.t(service.descKey) }}</p>
+          <div class="service-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="services-cta" appReveal>
+      <a routerLink="/services" class="btn-primary">
+        <i class="fas fa-th-large"></i>
+        {{ t.t('learn_more') }}
+      </a>
+      <a routerLink="/contact" class="btn-outline">
+        <i class="fas fa-phone-alt"></i>
+        {{ t.t('services_cta') }}
+      </a>
+    </div>
+  </div>
+</section>

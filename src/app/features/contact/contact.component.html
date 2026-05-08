@@ -1,0 +1,179 @@
+<!-- Contact Hero -->
+<div class="contact-hero">
+  <div class="contact-hero-bg"></div>
+  <div class="contact-hero-content">
+    <div class="hero-badge-small" appReveal>
+      <i class="fas fa-envelope"></i>
+      <span>{{ t.isArabic() ? 'تواصل معنا' : 'Get In Touch' }}</span>
+    </div>
+    <h1 appReveal>{{ t.t('contact_title') }}</h1>
+    <p appReveal>{{ t.t('contact_subtitle') }}</p>
+  </div>
+</div>
+
+<!-- Contact Section -->
+<section class="contact-section section-padding">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Left: Info -->
+      <div class="contact-info reveal-left" appReveal>
+        <!-- Info Cards -->
+        <div class="info-cards">
+          @for (info of contactInfo; track info.labelKey) {
+            <div class="info-card">
+              <div class="info-icon" [style.background]="info.color + '20'" [style.color]="info.color">
+                <i [class]="info.icon"></i>
+              </div>
+              <div class="info-content">
+                <span class="info-label">{{ t.t(info.labelKey) }}</span>
+                <div class="info-values">
+                  @for (val of info.values; track val; let j = $index) {
+                    <a [href]="info.links[j]" class="info-value" target="_blank" rel="noopener">
+                      {{ val }}
+                    </a>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Quick Action Buttons -->
+        <div class="quick-actions">
+          <a href="tel:+201030957153" class="action-btn call-btn">
+            <div class="action-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <div class="action-title">{{ t.t('contact_call') }}</div>
+              <div class="action-sub">01030957153</div>
+            </div>
+          </a>
+          <a href="https://wa.me/201030957153" target="_blank" rel="noopener" class="action-btn wa-btn">
+            <div class="action-icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <div class="action-title">{{ t.t('contact_whatsapp') }}</div>
+              <div class="action-sub">{{ t.isArabic() ? 'رد سريع' : 'Quick response' }}</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Map placeholder -->
+        <div class="map-placeholder">
+          <div class="map-inner">
+            <i class="fas fa-map-marker-alt map-icon"></i>
+            <p>{{ t.isArabic() ? 'القاهرة، مصر' : 'Cairo, Egypt' }}</p>
+            <a href="https://maps.google.com/?q=Cairo,Egypt" target="_blank" rel="noopener" class="map-link">
+              <i class="fas fa-external-link-alt"></i>
+              {{ t.isArabic() ? 'فتح في خرائط جوجل' : 'Open in Google Maps' }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="contact-form-wrap reveal-right" appReveal>
+        <div class="form-card">
+          <div class="form-header">
+            <div class="form-header-icon">
+              <i class="fas fa-paper-plane"></i>
+            </div>
+            <div>
+              <h3>{{ t.isArabic() ? 'أرسل رسالتك' : 'Send a Message' }}</h3>
+              <p>{{ t.isArabic() ? 'سنرد عليك في أقرب وقت' : 'We\'ll get back to you shortly' }}</p>
+            </div>
+          </div>
+
+          @if (isSuccess()) {
+            <div class="success-banner">
+              <i class="fas fa-check-circle"></i>
+              <span>{{ t.t('contact_success') }}</span>
+            </div>
+          }
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="contact-form" novalidate>
+            <div class="form-row">
+              <!-- Name -->
+              <div class="form-group">
+                <label class="form-label" for="name">
+                  <i class="fas fa-user"></i> {{ t.t('contact_name') }} *
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  class="form-input"
+                  [class.error]="nameError"
+                  formControlName="name"
+                  [placeholder]="t.t('contact_name')"
+                />
+                @if (nameError) {
+                  <span class="error-message">{{ t.t('contact_name_error') }}</span>
+                }
+              </div>
+
+              <!-- Email -->
+              <div class="form-group">
+                <label class="form-label" for="email">
+                  <i class="fas fa-envelope"></i> {{ t.t('contact_email') }} *
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  class="form-input"
+                  [class.error]="emailError"
+                  formControlName="email"
+                  [placeholder]="t.t('contact_email')"
+                />
+                @if (emailError) {
+                  <span class="error-message">{{ t.t('contact_email_error') }}</span>
+                }
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+              <label class="form-label" for="phone">
+                <i class="fas fa-phone"></i> {{ t.t('contact_phone') }}
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                class="form-input"
+                formControlName="phone"
+                [placeholder]="t.isArabic() ? '01x xxxx xxxx' : '01x xxxx xxxx'"
+              />
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+              <label class="form-label" for="message">
+                <i class="fas fa-comment-alt"></i> {{ t.t('contact_message') }} *
+              </label>
+              <textarea
+                id="message"
+                class="form-input form-textarea"
+                [class.error]="messageError"
+                formControlName="message"
+                rows="5"
+                [placeholder]="t.isArabic() ? 'اكتب رسالتك هنا...' : 'Write your message here...'"
+              ></textarea>
+              @if (messageError) {
+                <span class="error-message">{{ t.t('contact_message_error') }}</span>
+              }
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn-submit" [disabled]="isSending()">
+              @if (isSending()) {
+                <span class="spinner"></span>
+                {{ t.t('contact_sending') }}
+              } @else {
+                <i class="fas fa-paper-plane"></i>
+                {{ t.t('contact_send') }}
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
