@@ -54,6 +54,15 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, transparent 60%);
+  background-image: url("/images/Hima-AC.png");
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.profile-image-placeholder img{
+  position: absolute;
+  top: 1px;
 }
 
 .profile-icon {
