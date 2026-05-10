@@ -280,7 +280,7 @@ const ar: Translations = {
 
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
-  readonly language = signal<Language>('en');
+  readonly language = signal<Language>('ar');
   readonly translations = computed<Translations>(() =>
     this.language() === 'en' ? en : ar
   );
